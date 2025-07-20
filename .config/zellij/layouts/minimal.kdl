@@ -1,0 +1,12 @@
+layout {
+    pane
+
+    swap_tiled_layout name="Stacked" {
+    tab {
+      pane stacked=true {
+        pane
+        pane
+      }
+    }
+  }
+}

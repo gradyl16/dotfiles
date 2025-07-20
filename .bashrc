@@ -126,16 +126,32 @@ export GROFF_NO_SGR=1                   # for konsole
 
 # nvim env var
 export NVIMRC="$HOME/.config/nvim/init.lua"
+export EDITOR="nvim"
 
 # Shell customization
 eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
 eval "$(oh-my-posh enable upgrade)"
 
-# Neofetch
+# Terminal multiplexing
+eval "$(zellij setup --generate-auto-start bash)"
+export ZELLIJ_AUTO_ATTACH=1
+export ZELLIJ_AUTO_EXIT=1
+
 neofetch
 
 # Start ssh agent (maybe this is lazy and insecure, but convenient for now)
-eval $(ssh-agent) &> /dev/null
-ssh-add "$HOME/.ssh/git" &> /dev/null
+#  -- commenting this out since i dont remember why i need it --
+# eval $(ssh-agent) &> /dev/null
+# ssh-add "$HOME/.ssh/git" &> /dev/null
 
-source /home/asclepius/.pymobiledevice3.bash
+# Frida hacking stuff
+#  -- commenting this out since i dont remember why i need it --
+# source /home/asclepius/.pymobiledevice3.bash
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
