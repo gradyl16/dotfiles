@@ -118,19 +118,24 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# === GPG stuff ===
 # nvim env var
 export NVIMRC="$HOME/.config/nvim/init.lua"
 export EDITOR="nvim"
 
-# gpg key management
-GPG_TTY=$(tty)
-export GPG_TTY
-
-# Start gpg-agent if not already running
-if ! pgrep -x -u "${USER}" gpg-agent &> /dev/null; then
-   gpg-connect-agent /bye &> /dev/null
+# Set SSH to use gpg-agent (see 'man gpg-agent', section EXAMPLES)
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  # export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
 
+# Set GPG TTY as stated in 'man gpg-agent'
+export GPG_TTY=$(tty)
+
+# Refresh gpg-agent tty in case user switches into an X session
+gpg-connect-agent updatestartuptty /bye > /dev/null
+# =================
 
 # Shell customization
 eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
