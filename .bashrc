@@ -8,6 +8,11 @@ case $- in
       *) return;;
 esac
 
+# Startup
+if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+    exec start-hyprland
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -36,8 +41,14 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # path mods
-export PATH=$PATH:/usr/local/go/bin
-export PATH=/usr/local/pgsql/bin:$PATH
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/usr/local/pgsql/bin"
+export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$PATH:$BUN_INSTALL/bin"
+export PATH="$PATH:/snap/bin"
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
@@ -107,8 +118,23 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export OPENAI_API_KEY='sk-proj-Vtc7OvujzInZCsRRSpbaT3BlbkFJkLkRhbvqwWWlXaUeBbrY'
-. "$HOME/.cargo/env"
+# nvim env var
+export NVIMRC="$HOME/.config/nvim/init.lua"
+export EDITOR="nvim"
+
+# gpg key management
+GPG_TTY=$(tty)
+export GPG_TTY
+
+# Start gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent &> /dev/null; then
+   gpg-connect-agent /bye &> /dev/null
+fi
+
+
+# Shell customization
+eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
+eval "$(oh-my-posh enable upgrade)"
 
 # colorls completion (dracula)
 source $(dirname $(gem which colorls))/tab_complete.sh
@@ -124,34 +150,18 @@ export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
 export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
 export GROFF_NO_SGR=1                   # for konsole
 
-# nvim env var
-export NVIMRC="$HOME/.config/nvim/init.lua"
-export EDITOR="nvim"
-
-# Shell customization
-eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
-eval "$(oh-my-posh enable upgrade)"
-
 # Terminal multiplexing
-eval "$(zellij setup --generate-auto-start bash)"
-export ZELLIJ_AUTO_ATTACH=1
-export ZELLIJ_AUTO_EXIT=1
+if [[ -z "$ZELLIJ" ]]; then
+    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+        zellij attach -c
+    else
+        zellij -l welcome
+    fi
 
-neofetch
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+        exit
+    fi
+fi
 
-# Start ssh agent (maybe this is lazy and insecure, but convenient for now)
-#  -- commenting this out since i dont remember why i need it --
-# eval $(ssh-agent) &> /dev/null
-# ssh-add "$HOME/.ssh/git" &> /dev/null
-
-# Frida hacking stuff
-#  -- commenting this out since i dont remember why i need it --
-# source /home/asclepius/.pymobiledevice3.bash
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# Display cool art
+fastfetch
