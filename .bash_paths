@@ -1,0 +1,15 @@
+path_add() {
+    case ":$PATH:" in
+        *":$1:"*) ;; # already in PATH
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+path_add "$PATH:$HOME/.local/bin"
+path_add "$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
+path_add "$PATH:$HOME/.bun/bin"
+path_add "$PATH:/usr/local/go/bin"
+path_add "$PATH:/usr/local/pgsql/bin"
+path_add "$PATH:/snap/bin"
+
+export PATH

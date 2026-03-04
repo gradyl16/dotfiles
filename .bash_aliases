@@ -31,4 +31,4 @@ adbkill() {
 alias adbls='adb shell ps -A | grep -E "facebook|instagram|musically|snapchat|messenger|spotify|pubg"'
 
 # SSH kitty compatibility
-# alias s="kitten ssh"
+alias s="kitten ssh"

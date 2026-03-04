@@ -1,81 +1,42 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
+# === STARTUP ===
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
 
-# Startup
+# Start Hyprland on boot
 if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
     exec start-hyprland
 fi
+# ===============
 
-# don't put duplicate lines or lines starting with space in the history.
+# === SHELL OPTS ===
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTCONTROL=ignoreboth  # ignore redundant history entries
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Append to the history file, don't overwrite it
+shopt -s histappend
+
+# Check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS
 shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
+# ===============
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# path mods
-export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:/usr/local/pgsql/bin"
-export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
-export PATH="$PATH:$HOME/.local/bin"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$PATH:$BUN_INSTALL/bin"
-export PATH="$PATH:/snap/bin"
-
-# set a fancy prompt (non-color, unless we know we "want" color)
+# === SHELL DECORATION ===
+# Set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+# Make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -86,26 +47,70 @@ xterm*|rxvt*)
     ;;
 esac
 
-# Enable color support of ls
+# Enable color support of (regular) ls
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
-# colored GCC warnings and errors
+# Dracula stuff
+if [ "$TERM" = "linux" ]; then     # Apply dracula theme to raw tty
+	printf %b '\e[40m' '\e[8]' # set default background to color 0 'dracula-bg'
+	printf %b '\e[37m' '\e[8]' # set default foreground to color 7 'dracula-fg'
+	printf %b '\e]P0282a36'    # redefine 'black'          as 'dracula-bg'
+	printf %b '\e]P86272a4'    # redefine 'bright-black'   as 'dracula-comment'
+	printf %b '\e]P1ff5555'    # redefine 'red'            as 'dracula-red'
+	printf %b '\e]P9ff7777'    # redefine 'bright-red'     as '#ff7777'
+	printf %b '\e]P250fa7b'    # redefine 'green'          as 'dracula-green'
+	printf %b '\e]PA70fa9b'    # redefine 'bright-green'   as '#70fa9b'
+	printf %b '\e]P3f1fa8c'    # redefine 'brown'          as 'dracula-yellow'
+	printf %b '\e]PBffb86c'    # redefine 'bright-brown'   as 'dracula-orange'
+	printf %b '\e]P4bd93f9'    # redefine 'blue'           as 'dracula-purple'
+	printf %b '\e]PCcfa9ff'    # redefine 'bright-blue'    as '#cfa9ff'
+	printf %b '\e]P5ff79c6'    # redefine 'magenta'        as 'dracula-pink'
+	printf %b '\e]PDff88e8'    # redefine 'bright-magenta' as '#ff88e8'
+	printf %b '\e]P68be9fd'    # redefine 'cyan'           as 'dracula-cyan'
+	printf %b '\e]PE97e2ff'    # redefine 'bright-cyan'    as '#97e2ff'
+	printf %b '\e]P7f8f8f2'    # redefine 'white'          as 'dracula-fg'
+	printf %b '\e]PFffffff'    # redefine 'bright-white'   as '#ffffff'
+	clear
+fi
+
+source $(dirname $(gem which colorls))/tab_complete.sh
+
+export MANPAGER="/usr/bin/less -s -M +Gg"
+export LESS_TERMCAP_mb=$'\e[1;31m'      # begin bold
+export LESS_TERMCAP_md=$'\e[1;34m'      # begin blink
+export LESS_TERMCAP_so=$'\e[01;45;37m'  # begin reverse video
+export LESS_TERMCAP_us=$'\e[01;36m'     # begin underline
+export LESS_TERMCAP_me=$'\e[0m'         # reset bold/blink
+export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
+export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
+export GROFF_NO_SGR=1                   # for konsole
+
+eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
+eval "$(oh-my-posh enable upgrade)"
+
+# Dracula theme for Docker BuildKit - https://draculatheme.com/docker
+export BUILDKIT_COLORS="run=189,147,249:cancel=241,250,140:error=255,85,85:warning=241,250,140"
+
+# Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# ========================
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
+# === Cmd line QoL ===
+# Alias definitions
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# Path modifications
+if [ -f ~/.bash_paths ]; then
+    . ~/.bash_paths
+fi
+
+# Enable programmable completion features (you don't need to
+# enable this, if it's already enabled in /etc/bash.bashrc and
+# /etc/profile sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -114,15 +119,22 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Neovim (editor) env vars
+export EDITOR="nvim"
+export NVIMRC="$HOME/.config/$EDITOR/init.lua"
+
+# Nvm (Node.js) package management
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# ====================
 
-# nvim env var
-export NVIMRC="$HOME/.config/nvim/init.lua"
-export EDITOR="nvim"
+# === Crypto stuff ===
+# Start gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent &> /dev/null; then
+   gpg-connect-agent /bye &> /dev/null
+fi
 
-# === GPG stuff ===
 # Set SSH to use gpg-agent (see 'man gpg-agent', section EXAMPLES)
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
@@ -137,35 +149,9 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye > /dev/null
 # =================
 
-# Shell customization
-eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
-eval "$(oh-my-posh enable upgrade)"
-
-# colorls completion (dracula)
-source $(dirname $(gem which colorls))/tab_complete.sh
-
-# man pages (dracula)
-export MANPAGER="/usr/bin/less -s -M +Gg"
-export LESS_TERMCAP_mb=$'\e[1;31m'      # begin bold
-export LESS_TERMCAP_md=$'\e[1;34m'      # begin blink
-export LESS_TERMCAP_so=$'\e[01;45;37m'  # begin reverse video
-export LESS_TERMCAP_us=$'\e[01;36m'     # begin underline
-export LESS_TERMCAP_me=$'\e[0m'         # reset bold/blink
-export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
-export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
-export GROFF_NO_SGR=1                   # for konsole
-
 # Terminal multiplexing
 if [[ -z "$ZELLIJ" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach -c
-    else
-        zellij -l welcome
-    fi
-
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
+    zellij -l welcome
 fi
 
 # Display cool art
