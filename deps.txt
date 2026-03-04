@@ -1,0 +1,15 @@
+hyprland
+hyprlock
+hypridle
+hyprpanel
+kitty
+zellij
+less
+cargo
+neovim
+qt5ct
+gtk4-git
+fuzzel
+zathura
+btop
+fastfetch
