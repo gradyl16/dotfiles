@@ -1,29 +1,21 @@
 keybinds clear-defaults=true {
-    locked {
-        // Autolock config
-        bind "Ctrl g" {
-            // Disable the autolock plugin.
-            MessagePlugin "autolock" {payload "disable";};
-            // Unlock Zellij.
-            SwitchToMode "Normal";
+    normal {
+        bind "enter" {
+            WriteChars "\r"
+            MessagePlugin "autolock" {
+                name "autolock"
+                floating false
+            }
         }
     }
-    normal {
-        unbind "Alt h"
-        unbind "Alt j"
-        unbind "Alt k"
-        unbind "Alt l"
-
-        bind "Ctrl Alt l" { SwitchToMode "move"; }
-
-        // Autolock config
-        bind "Enter" {
-            // Passthru `Enter`.
-            WriteChars "\u{000D}";
-            // Invoke autolock to immediately assess proper lock state.
-            // (This provides a snappier experience compared to
-            // solely relying on `reaction_seconds` to elapse.)
-            MessagePlugin "autolock" {};
+    locked {
+        bind "Ctrl g" {
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "disable"
+                floating false
+            }
+            SwitchToMode "normal"
         }
     }
     pane {
@@ -35,17 +27,14 @@ keybinds clear-defaults=true {
         bind "d" { NewPane "down"; SwitchToMode "normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
-        bind "h" { MoveFocus "left"; }
-        bind "i" { TogglePanePinned; SwitchToMode "normal"; }
-        bind "j" { MoveFocus "down"; }
-        bind "k" { MoveFocus "up"; }
-        bind "n" { NewPane; SwitchToMode "normal"; }
-        bind "p" { SwitchFocus; }
-        bind "Ctrl p" { SwitchToMode "normal"; }
         bind "h" { NewPane "left"; SwitchToMode "normal"; }
+        bind "i" { TogglePanePinned; SwitchToMode "normal"; }
         bind "j" { NewPane "down"; SwitchToMode "normal"; }
         bind "k" { NewPane "up"; SwitchToMode "normal"; }
         bind "l" { NewPane "right"; SwitchToMode "normal"; }
+        bind "n" { NewPane; SwitchToMode "normal"; }
+        bind "p" { SwitchFocus; }
+        bind "Ctrl p" { SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
     }
@@ -159,42 +148,58 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
     }
-    shared {
-        bind "Ctrl g" {
-            MessagePlugin "autolock" { payload "toggle"; };
-        }
-    }
     shared_except "locked" {
-        bind "Ctrl h" {
-            MoveFocusOrTab "Left";
-            MessagePlugin "autolock" { payload "enable"; };
-        }
-        bind "Ctrl l" {
-            MoveFocusOrTab "Right";
-            MessagePlugin "autolock" { payload "enable"; };
-        }
-        bind "Ctrl j" {
-            MoveFocus "Down";
-            MessagePlugin "autolock" { payload "enable"; };
-        }
-        bind "Ctrl k" {
-            MoveFocus "Up";
-            MessagePlugin "autolock" { payload "enable"; };
-        }
-        // end autolock config
-
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt f" { ToggleFloatingPanes; }
+        bind "Ctrl g" {
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "toggle"
+                floating false
+            }
+        }
         bind "Alt i" { MoveTab "left"; }
+        bind "Ctrl j" {
+            MoveFocus "down"
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "enable"
+                floating false
+            }
+        }
+        bind "Ctrl k" {
+            MoveFocus "up"
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "enable"
+                floating false
+            }
+        }
+        bind "Ctrl l" {
+            MoveFocusOrTab "right"
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "enable"
+                floating false
+            }
+        }
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
         bind "Ctrl q" { Quit; }
     }
     shared_except "locked" "move" {
+        bind "Ctrl h" {
+            MoveFocusOrTab "left"
+            MessagePlugin "autolock" {
+                name "autolock"
+                payload "enable"
+                floating false
+            }
+        }
         bind "Ctrl Alt l" { SwitchToMode "move"; }
     }
     shared_except "locked" "session" {
@@ -205,10 +210,6 @@ keybinds clear-defaults=true {
         bind "Alt down" { MoveFocus "down"; }
         bind "Alt up" { MoveFocus "up"; }
         bind "Alt right" { MoveFocusOrTab "right"; }
-        bind "Alt h" { MoveFocusOrTab "left"; }
-        bind "Alt j" { MoveFocus "down"; }
-        bind "Alt k" { MoveFocus "up"; }
-        bind "Alt l" { MoveFocusOrTab "right"; }
     }
     shared_except "locked" "scroll" "search" "tmux" {
         bind "Ctrl b" { SwitchToMode "tmux"; }
@@ -230,6 +231,12 @@ keybinds clear-defaults=true {
     }
     shared_except "normal" "locked" "entersearch" "renametab" "renamepane" {
         bind "esc" { SwitchToMode "normal"; }
+    }
+    shared_except "normal" "locked" "scroll" {
+        bind "Alt h" { MoveFocusOrTab "left"; }
+        bind "Alt j" { MoveFocus "down"; }
+        bind "Alt k" { MoveFocus "up"; }
+        bind "Alt l" { MoveFocusOrTab "right"; }
     }
     shared_among "pane" "tmux" {
         bind "x" { CloseFocus; SwitchToMode "normal"; }
@@ -294,8 +301,13 @@ keybinds clear-defaults=true {
 
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
-plugins{
+plugins {
     about location="zellij:about"
+    autolock location="file:/home/medusa/.config/zellij/plugins/zellij-autolock.wasm" {
+        is_enabled true
+        reaction_seconds "0.3"
+        triggers "nvim|vim|git|fzf|zoxide|atuin"
+    }
     compact-bar location="zellij:compact-bar"
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
@@ -308,11 +320,6 @@ plugins{
     tab-bar location="zellij:tab-bar"
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
-    }
-    autolock location="file:~/.config/zellij/plugins/zellij-autolock.wasm" {
-        is_enabled true
-        triggers "nvim|vim|git|fzf|zoxide|atuin"
-        reaction_seconds "0.3"
     }
 }
 
@@ -352,7 +359,7 @@ default_mode "normal"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-default_layout "minimal"
+default_layout "compact"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -362,7 +369,7 @@ default_layout "minimal"
 // The folder in which Zellij will look for themes
 // (Requires restart)
 // 
-theme_dir "/home/asclepius/.config/zellij/themes/"
+theme_dir "/home/medusa/.config/zellij/themes/"
  
 // Toggle enabling the mouse mode.
 // On certain configurations, or terminals this could
@@ -378,7 +385,7 @@ theme_dir "/home/asclepius/.config/zellij/themes/"
 //   - true (default, enabled)
 //   - false
 // 
-pane_frames false
+// pane_frames false
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -412,11 +419,11 @@ pane_frames false
 // that will be used by default if this option is not set.
 // Examples:
 //
-copy_command "xclip -selection clipboard" // x11
+// copy_command "xclip -selection clipboard" // x11
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
 // 
-// copy_command "pbcopy"
+copy_command "xclip -selection clipboard"
  
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
@@ -441,7 +448,7 @@ copy_command "xclip -selection clipboard" // x11
 // otherwise this will error if such a session exists.
 // Default: <RANDOM>
 // 
-// session_name "My singleton session"
+// session_name "env"
  
 // When `session_name` is provided, attaches to that session
 // if it is already running or creates it otherwise.
@@ -492,7 +499,7 @@ copy_command "xclip -selection clipboard" // x11
 // (Requires restart)
 // Default: false
 // 
-// disable_session_metadata false
+// disable_session_metadata true
  
 // Enable or disable support for the enhanced Kitty Keyboard Protocol (the host terminal must also support it)
 // (Requires restart)
@@ -508,7 +515,7 @@ copy_command "xclip -selection clipboard" // x11
 // Whether to show tips on startup
 // Default: true
 // 
-// show_startup_tips false
+show_startup_tips false
  
 // Whether to show release notes on first version run
 // Default: true
