@@ -13,22 +13,25 @@ alias ll='ls -lah --color=auto --dark'
 alias la='ls -A --color=auto --dark'
 alias l='ls -lh --color=auto --dark'
 
-# More handy aliases
+# Dir changing shortcuts
 alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
-alias g='git'
+
+# Pkg mgmt
 alias up='paru -Syu'
 alias in='paru -S'
 alias un='paru -R'
 
-# For adb stuff
+# Android
+alias adbls='adb shell ps -A | grep -E "facebook|instagram|musically|snapchat|messenger|spotify|pubg"'
 adbkill() {
   adb shell "ps -A | grep $1 | awk '{print \$2}' | while read pid; do su -c "kill -9 \$pid"; done"
 }
 
-alias adbls='adb shell ps -A | grep -E "facebook|instagram|musically|snapchat|messenger|spotify|pubg"'
+# Misc
+alias s='kitten ssh'
+alias g='git'
+alias pipsh='pipenv shell --fancy'
 
-# SSH kitty compatibility
-alias s="kitten ssh"

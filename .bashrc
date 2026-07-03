@@ -6,9 +6,9 @@ case $- in
 esac
 
 # Start Hyprland on boot
-if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
-    exec start-hyprland
-fi
+# if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+#     exec start-hyprland
+# fi
 # ===============
 
 # === SHELL OPTS ===
@@ -150,8 +150,9 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 # =================
 
 # Terminal multiplexing
+eval "$(zellij setup --generate-auto-start bash)"
 if [[ -z "$ZELLIJ" ]]; then
-    zellij -l welcome
+    zellij attach -c
 fi
 
 # Display cool art
