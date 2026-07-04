@@ -1,0 +1,8 @@
+require("hyprland.env")
+require("hyprland.init")
+require("hyprland.monitors")
+require("hyprland.general")
+require("hyprland.colors")
+require("hyprland.rules")
+require("hyprland.workspaces")
+require("hyprland.binds")
