@@ -1,12 +1,12 @@
 # ls aliases (colorls)
 if [ -x /usr/bin/dircolors ]; then
-    alias ls='colorls -lh --color=auto --dark'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
+  alias ls='colorls -lh --color=auto --dark'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 alias ll='ls -lah --color=auto --dark'
@@ -35,3 +35,10 @@ alias s='kitten ssh'
 alias g='git'
 alias pipsh='pipenv shell --fancy'
 
+zds() {
+  zellij list-sessions --short | while IFS= read -r session; do
+    if [[ $session =~ .*-.* ]]; then
+      zellij delete-session --force $session
+    fi
+  done
+}

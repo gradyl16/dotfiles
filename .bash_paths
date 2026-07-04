@@ -5,11 +5,10 @@ path_add() {
     esac
 }
 
-path_add "$PATH:$HOME/.local/bin"
-path_add "$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
-path_add "$PATH:$HOME/.bun/bin"
-path_add "$PATH:/usr/local/go/bin"
-path_add "$PATH:/usr/local/pgsql/bin"
-path_add "$PATH:/snap/bin"
+paths = ["$PATH:$HOME/.local/bin", "$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin", "$PATH:$HOME/.bun/bin", "$PATH:/usr/local/go/bin", "$PATH:/usr/local/pgsql/bin", "$PATH:/snap/bin"]
+
+for path in $paths; do
+	path_add $path
+done
 
 export PATH
