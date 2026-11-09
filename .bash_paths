@@ -1,14 +1,5 @@
-path_add() {
-    case ":$PATH:" in
-        *":$1:"*) ;; # already in PATH
-        *) PATH="$1:$PATH" ;;
-    esac
-}
-
-paths = ["$PATH:$HOME/.local/bin", "$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin", "$PATH:$HOME/.bun/bin", "$PATH:/usr/local/go/bin", "$PATH:/usr/local/pgsql/bin", "$PATH:/snap/bin"]
-
-for path in $paths; do
-	path_add $path
-done
-
-export PATH
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.bun/bin"
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/usr/local/pgsql/bin"
+export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"  # For colorls
