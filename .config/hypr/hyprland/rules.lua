@@ -35,7 +35,6 @@ hl.window_rule({
 		class = "slack",
 	},
 	workspace = "1",
-    group = "invade",
 	no_initial_focus = true,
 })
 

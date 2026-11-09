@@ -303,7 +303,7 @@ keybinds clear-defaults=true {
 // changing these requires a restart to take effect
 plugins {
     about location="zellij:about"
-    autolock location="file:/home/medusa/.config/zellij/plugins/zellij-autolock.wasm" {
+    autolock location="file:/home/dylen/.config/zellij/plugins/zellij-autolock.wasm" {
         is_enabled true
         reaction_seconds "0.3"
         triggers "nvim|vim|git|fzf|zoxide|atuin"
@@ -364,12 +364,12 @@ default_layout "compact"
 // The folder in which Zellij will look for layouts
 // (Requires restart)
 // 
-layout_dir "/home/medusa/.config/zellij/layouts"
+//layout_dir "/home/medusa/.config/zellij/layouts"
  
 // The folder in which Zellij will look for themes
 // (Requires restart)
 // 
-theme_dir "/home/medusa/.config/zellij/themes/"
+//theme_dir "/home/medusa/.config/zellij/themes/"
  
 // Toggle enabling the mouse mode.
 // On certain configurations, or terminals this could

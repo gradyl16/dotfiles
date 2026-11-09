@@ -377,7 +377,7 @@
   "theme.bar.buttons.modules.worldclock.border": "#ff79c6",
   "theme.font.name": "Proxima Nova",
   "theme.font.label": "Proxima Nova",
-  "theme.font.size": "1.1rem",
+  "theme.font.size": "0.9rem",
   "menus.dashboard.shortcuts.left.shortcut1.command": "firefox",
   "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Firefox",
   "menus.dashboard.shortcuts.left.shortcut1.icon": "󰄛",
@@ -408,6 +408,7 @@
         "bluetooth",
         "systray",
         "clock",
+        "battery",
         "notifications"
       ]
     },
