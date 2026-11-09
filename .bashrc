@@ -5,12 +5,6 @@ case $- in
       *) return;;
 esac
 
-# Start Hyprland on boot
-# if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
-#     exec start-hyprland
-# fi
-# ===============
-
 # === SHELL OPTS ===
 # See bash(1) for more options
 HISTCONTROL=ignoreboth  # ignore redundant history entries
@@ -150,9 +144,13 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 # =================
 
 # Terminal multiplexing
-eval "$(zellij setup --generate-auto-start bash)"
 if [[ -z "$ZELLIJ" ]]; then
-    zellij attach -c
+    sessions=$(zellij list-sessions --short 2>/dev/null)
+    if [[ -n "$sessions" ]]; then
+        zellij attach "$(head -n 1 <<< "$sessions")"
+    else
+        zellij attach --create Environment
+    fi
 fi
 
 # Display cool art

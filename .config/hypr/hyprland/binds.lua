@@ -36,10 +36,14 @@ hl.bind("ALT + SHIFT + h", hl.dsp.group.prev())
 hl.bind("ALT + SHIFT + l", hl.dsp.group.next())
 
 -- Change tiling arrangement
-hl.bind(main_mod .. " + SHIFT + h", hl.dsp.window.move({ into_or_create_group = "l" }))
-hl.bind(main_mod .. " + SHIFT + l", hl.dsp.window.move({ into_or_create_group = "r" }))
-hl.bind(main_mod .. " + SHIFT + k", hl.dsp.window.move({ into_or_create_group = "u" }))
-hl.bind(main_mod .. " + SHIFT + j", hl.dsp.window.move({ into_or_create_group = "d" }))
+hl.bind(main_mod .. " + CTRL + SHIFT + h", hl.dsp.window.move({ into_or_create_group = "l" }))
+hl.bind(main_mod .. " + CTRL + SHIFT + l", hl.dsp.window.move({ into_or_create_group = "r" }))
+hl.bind(main_mod .. " + CTRL + SHIFT + k", hl.dsp.window.move({ into_or_create_group = "u" }))
+hl.bind(main_mod .. " + CTRL + SHIFT + j", hl.dsp.window.move({ into_or_create_group = "d" }))
+hl.bind(main_mod .. " + SHIFT + h", hl.dsp.window.move({ out_of_group = "l" }))
+hl.bind(main_mod .. " + SHIFT + l", hl.dsp.window.move({ out_of_group = "r" }))
+hl.bind(main_mod .. " + SHIFT + k", hl.dsp.window.move({ out_of_group = "u" }))
+hl.bind(main_mod .. " + SHIFT + j", hl.dsp.window.move({ out_of_group = "d" }))
 
 -- Switch workspaces with mainMod + [0-9]
 hl.bind(main_mod .. " + 1", hl.dsp.focus({ workspace = 1 }))
