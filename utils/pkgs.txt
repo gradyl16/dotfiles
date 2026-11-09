@@ -45,10 +45,10 @@ libgnome-keyring
 libsoup
 libudev0-shim
 matugen-bin
+neovim-git
 ocrmypdf
 paru
 paru-debug
-plex-media-server
 postman-bin
 protonmail-bridge-bin
 protonmail-bridge-bin-debug
