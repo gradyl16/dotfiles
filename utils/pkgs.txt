@@ -20,6 +20,7 @@ interception-vimproved-git
 interception-vimproved-git-debug
 iwgtk
 jabref
+less
 libastal-4-git
 libastal-apps-git
 libastal-auth-git
