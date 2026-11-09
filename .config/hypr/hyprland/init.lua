@@ -3,6 +3,8 @@
 -- =================
 
 hl.on("hyprland.start", function ()
+  hl.exec_cmd("systemctl --user start hyprpolkitagent")
+
   -- Startup apps
   hl.exec_cmd("hyprpanel & hyprpaper & firefox & kitty & spotify & slack & signal-desktop & hypridle")
 
