@@ -82,6 +82,9 @@ export GROFF_NO_SGR=1                   # for konsole
 eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
 eval "$(oh-my-posh enable upgrade)"
 
+# Zoxide support (better version of cd)
+eval "$(zoxide init bash)"
+
 # Dracula theme for Docker BuildKit - https://draculatheme.com/docker
 export BUILDKIT_COLORS="run=189,147,249:cancel=241,250,140:error=255,85,85:warning=241,250,140"
 
