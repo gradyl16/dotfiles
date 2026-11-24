@@ -69,8 +69,6 @@ if [ "$TERM" = "linux" ]; then     # Apply dracula theme to raw tty
 	clear
 fi
 
-source $(dirname $(gem which colorls))/tab_complete.sh
-
 export MANPAGER="/usr/bin/less -s -M +Gg"
 export LESS_TERMCAP_mb=$'\e[1;31m'      # begin bold
 export LESS_TERMCAP_md=$'\e[1;34m'      # begin blink

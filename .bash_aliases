@@ -1,6 +1,8 @@
-# ls aliases (colorls)
 if [ -x /usr/bin/dircolors ]; then
-  alias ls='colorls -lh --color=auto --dark'
+  alias ls='lsd'
+  alias l='lsd'
+  alias ll='lsd -lh'
+  alias la='lsd -lah'
   alias dir='dir --color=auto'
   alias vdir='vdir --color=auto'
 
@@ -9,9 +11,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-alias ll='ls -lah --color=auto --dark'
-alias la='ls -A --color=auto --dark'
-alias l='ls -lh --color=auto --dark'
 
 # Dir changing shortcuts
 alias ..='cd ..'
