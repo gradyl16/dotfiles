@@ -6,7 +6,7 @@ local main_mod = "SUPER"
 
 local term = "kitty"
 local file_manager = "nemo"
-local browser = "firefox"
+local browser = "brave"
 local menu = "fuzzel"
 
 -- hl.bind(main_mod .. " + K", hl.dsp.exit())
