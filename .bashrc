@@ -46,26 +46,26 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
-# Dracula stuff
-if [ "$TERM" = "linux" ]; then     # Apply dracula theme to raw tty
-	printf %b '\e[40m' '\e[8]' # set default background to color 0 'dracula-bg'
-	printf %b '\e[37m' '\e[8]' # set default foreground to color 7 'dracula-fg'
-	printf %b '\e]P0282a36'    # redefine 'black'          as 'dracula-bg'
-	printf %b '\e]P86272a4'    # redefine 'bright-black'   as 'dracula-comment'
-	printf %b '\e]P1ff5555'    # redefine 'red'            as 'dracula-red'
-	printf %b '\e]P9ff7777'    # redefine 'bright-red'     as '#ff7777'
-	printf %b '\e]P250fa7b'    # redefine 'green'          as 'dracula-green'
-	printf %b '\e]PA70fa9b'    # redefine 'bright-green'   as '#70fa9b'
-	printf %b '\e]P3f1fa8c'    # redefine 'brown'          as 'dracula-yellow'
-	printf %b '\e]PBffb86c'    # redefine 'bright-brown'   as 'dracula-orange'
-	printf %b '\e]P4bd93f9'    # redefine 'blue'           as 'dracula-purple'
-	printf %b '\e]PCcfa9ff'    # redefine 'bright-blue'    as '#cfa9ff'
-	printf %b '\e]P5ff79c6'    # redefine 'magenta'        as 'dracula-pink'
-	printf %b '\e]PDff88e8'    # redefine 'bright-magenta' as '#ff88e8'
-	printf %b '\e]P68be9fd'    # redefine 'cyan'           as 'dracula-cyan'
-	printf %b '\e]PE97e2ff'    # redefine 'bright-cyan'    as '#97e2ff'
-	printf %b '\e]P7f8f8f2'    # redefine 'white'          as 'dracula-fg'
-	printf %b '\e]PFffffff'    # redefine 'bright-white'   as '#ffffff'
+# Catppuccin Mocha for the raw tty
+if [ "$TERM" = "linux" ]; then
+	printf %b '\e[40m' '\e[8]' # set default background to color 0 (base)
+	printf %b '\e[37m' '\e[8]' # set default foreground to color 7 (text)
+	printf %b '\e]P01e1e2e'    # black          -> base
+	printf %b '\e]P8585b70'    # bright-black   -> surface2
+	printf %b '\e]P1f38ba8'    # red            -> red
+	printf %b '\e]P9eba0ac'    # bright-red     -> maroon
+	printf %b '\e]P2a6e3a1'    # green          -> green
+	printf %b '\e]PA94e2d5'    # bright-green   -> teal
+	printf %b '\e]P3f9e2af'    # brown          -> yellow
+	printf %b '\e]PBfab387'    # bright-brown   -> peach
+	printf %b '\e]P489b4fa'    # blue           -> blue
+	printf %b '\e]PCb4befe'    # bright-blue    -> lavender
+	printf %b '\e]P5cba6f7'    # magenta        -> mauve
+	printf %b '\e]PDf5c2e7'    # bright-magenta -> pink
+	printf %b '\e]P689dceb'    # cyan           -> sky
+	printf %b '\e]PE74c7ec'    # bright-cyan    -> sapphire
+	printf %b '\e]P7cdd6f4'    # white          -> text
+	printf %b '\e]PFbac2de'    # bright-white   -> subtext1
 	clear
 fi
 
@@ -79,14 +79,14 @@ export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
 export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
 export GROFF_NO_SGR=1                   # for konsole
 
-eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_dracula.omp.json")"
+eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/powerlevel10k_catppuccin_mocha.omp.json")"
 eval "$(oh-my-posh enable upgrade)"
 
 # Zoxide support (better version of cd)
 eval "$(zoxide init bash)"
 
-# Dracula theme for Docker BuildKit - https://draculatheme.com/docker
-export BUILDKIT_COLORS="run=189,147,249:cancel=241,250,140:error=255,85,85:warning=241,250,140"
+# Catppuccin Mocha for Docker BuildKit (run=mauve, cancel/warning=yellow, error=red)
+export BUILDKIT_COLORS="run=203,166,247:cancel=249,226,175:error=243,139,168:warning=249,226,175"
 
 # Colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

@@ -96,8 +96,7 @@ This config has an entire repository to itself. If you don't recursively clone s
 
 ### Themes
 
-- [Dracula Theme](https://draculatheme.com)
-- [Catpuccin Theme](https://catpuccin.com)
+- [Catppuccin](https://catppuccin.com) (Mocha)
 
 ## Misc
 

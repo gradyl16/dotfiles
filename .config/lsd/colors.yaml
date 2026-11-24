@@ -1,30 +1,43 @@
-#  Dracula
+#  Catppuccin Mocha
 #  ┬  ┌─┐┌┬┐
 #  │  └─┐ ││
 #  ┴─┘└─┘─┴┘
-# urrick hunt
 
-user: 159                           # cyan
-group: 231                          # foreground
+user: "#cba6f7"                     # mauve
+group: "#b4befe"                    # lavender
 permission:
-  read: 183                         # blue
-  write: 212                        # magenta
-  exec: 159                         # cyan
-  exec-sticky: 159                  # cyan
-  no-access: 210                    # red
+  read: "#a6e3a1"                   # green
+  write: "#f9e2af"                  # yellow
+  exec: "#eba0ac"                   # maroon
+  exec-sticky: "#cba6f7"            # mauve
+  no-access: "#a6adc8"              # subtext0
+  octal: "#94e2d5"                  # teal
+  acl: "#94e2d5"                    # teal
+  context: "#89dceb"                # sky
 date:
-  hour-old: 146                     # comment 20% lighter
-  day-old: 103                      # comment
-  older: 60                         # current line
+  hour-old: "#94e2d5"               # teal
+  day-old: "#89dceb"                # sky
+  older: "#74c7ec"                  # sapphire
 size:
-  none: 60                          # current line
-  small: 120                        # green
-  medium: 215                       # orange
-  large: 210                        # red
+  none: "#a6adc8"                   # subtext0
+  small: "#a6e3a1"                  # green
+  medium: "#f9e2af"                 # yellow
+  large: "#fab387"                  # peach
 inode:
-  valid: 231                        # foreground
-  invalid: 210                      # red
+  valid: "#f5c2e7"                  # pink
+  invalid: "#a6adc8"                # subtext0
 links:
-  valid: 159                        # cyan
-  invalid: 210                      # red
-tree-edge: 183                      # blue
+  valid: "#f5c2e7"                  # pink
+  invalid: "#a6adc8"                # subtext0
+tree-edge: "#bac2de"                # subtext1
+git-status:
+  default: "#cdd6f4"                # text
+  unmodified: "#cdd6f4"
+  ignored: "#a6adc8"
+  new-in-index: "#a6e3a1"
+  new-in-workdir: "#a6e3a1"
+  typechange: "#f9e2af"
+  deleted: "#f38ba8"
+  renamed: "#a6e3a1"
+  modified: "#f9e2af"
+  conflicted: "#f38ba8"

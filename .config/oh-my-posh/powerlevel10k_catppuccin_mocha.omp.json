@@ -1,17 +1,17 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "palette": {
-    "background": "#282A36",
-    "comment": "#6272A4",
-    "current-line": "#44475A",
-    "cyan": "#8BE9FD",
-    "foreground": "#F8F8F2",
-    "green": "#50FA7B",
-    "orange": "#FFB86C",
-    "pink": "#FF79C6",
-    "purple": "#BD93F9",
-    "red": "#FF5555",
-    "yellow": "#F1FA8C"
+    "background": "#1E1E2E",
+    "comment": "#585B70",
+    "current-line": "#45475A",
+    "cyan": "#89DCEB",
+    "foreground": "#CDD6F4",
+    "green": "#A6E3A1",
+    "orange": "#FAB387",
+    "pink": "#F5C2E7",
+    "purple": "#CBA6F7",
+    "red": "#F38BA8",
+    "yellow": "#F9E2AF"
   },
   "console_title_template": "{{ .Shell }} in {{ .Folder }}",
   "terminal_background": "p:background",
